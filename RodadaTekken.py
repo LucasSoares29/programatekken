@@ -229,6 +229,9 @@ class Ui_RodadaTekken(object):
             self.label_jogador1.setText(self.lutaAtual.jogador1.nome.strip("\n"))
             self.label_jogador2.setText(self.lutaAtual.jogador2.nome.strip("\n"))
 
+            #alterar o nome de quem começa
+            self.pushButton_2.setText("Quem é " + self.lutaAtual.jogador1.nome + "?")
+
             #carregar ComboBoxes que inserirei os resultados
             self.carregarComboBoxes()
 
