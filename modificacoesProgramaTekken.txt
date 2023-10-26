@@ -1,0 +1,1 @@
+Alterar cores posições quando o campeonato nao tem 2a fase

@@ -213,9 +213,9 @@ class Ui_CadastrarCampeonato(object):
                 plainText = str(nome[0]) + " cadastrado no campeonato com sucesso\n"
                 self.campoStatus.append(plainText)
                 if index == 0:
-                    progresso = 25 + porcentagem
+                    progresso = 25 + round(porcentagem)
                 else:
-                    progresso = progresso + porcentagem
+                    progresso = progresso + round(porcentagem)
                 self.progressBar.setValue(progresso)
         except Exception as e:
             print(e)

@@ -28,7 +28,8 @@ class Ui_RodadaTekken(object):
     partidasNaoFinalizadas = []
     campeonatoSelecionado = None
     segundaLuta = False # Botão ativado quando há clico no próxima luta uma vez no mesmo campeonato
-
+    combo_boxes = []
+    
     # OK
     def carregarCampeonatosEmAndamento(self):
         listaCampeonatos = CampeonatoDAO().listarCampeonatos()
@@ -126,10 +127,12 @@ class Ui_RodadaTekken(object):
             else:
                 self.resultados = ["Selecione um resultado", "Perfect", "Great", "Double KO", "Vitória", "Time Out", "Derrota"]
                 # removendo e readicionando os itens dos comboboxes
+                        
             combo_boxes = [self.comboBoxR1P1, self.comboBoxR2P1, self.comboBoxR3P1, self.comboBoxR4P1,
                             self.comboBoxR5P1, self.comboBoxR6P1, self.comboBoxR7P1, self.comboBoxR8P1, self.comboBoxR9P1,
                             self.comboBoxR1P2, self.comboBoxR2P2, self.comboBoxR3P2, self.comboBoxR4P2,
                             self.comboBoxR5P2, self.comboBoxR6P2, self.comboBoxR7P2, self.comboBoxR8P2, self.comboBoxR9P2]
+            
             # Aqui reseta os comboboxes quando está com o campeonato carregado
             for combo_box in combo_boxes:
                 combo_box.clear()
@@ -450,305 +453,431 @@ class Ui_RodadaTekken(object):
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1280, 720)
+        MainWindow.resize(3840, 2160)  # Updated resolution
+        
+        # Calculate position and size ratios
+        width_ratio = int(MainWindow.width() / 1920)
+        height_ratio = int(MainWindow.height() / 1080)
+        
+        #width_ratio = 2
+        #height_ratio = 2
+        
+        font_ratio = 1
+        
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(16, 20, 361, 31))
+        self.label.setGeometry(QtCore.QRect(16 * width_ratio, 25 * height_ratio, 361 * width_ratio, 31 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(14)
+        font.setPointSize(48 * font_ratio)
         self.label.setFont(font)
         self.label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.label.setObjectName("label")
 
         self.comboBoxCampeonato = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBoxCampeonato.setGeometry(QtCore.QRect(390, 25, 541, 22))
+        self.comboBoxCampeonato.setGeometry(QtCore.QRect(390 * width_ratio, 25 * height_ratio, 1082 * width_ratio, 44 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(24 * font_ratio)
         self.comboBoxCampeonato.setFont(font)
         self.comboBoxCampeonato.setObjectName("comboBoxCampeonato")
         self.carregarCampeonatosEmAndamento()
         self.comboBoxCampeonato.currentIndexChanged.connect(self.carregarLuta)
 
+
         self.label_rodada = QtWidgets.QLabel(self.centralwidget)
-        self.label_rodada.setGeometry(QtCore.QRect(0, 70, 1280, 41))
+        self.label_rodada.setGeometry(QtCore.QRect(0, 100 * height_ratio, 3840, 68 * height_ratio))
         self.label_rodada.setBaseSize(QtCore.QSize(0, 0))
         font = QtGui.QFont()
-        font.setPointSize(20)
+        font.setPointSize(40 * font_ratio)
         self.label_rodada.setFont(font)
         self.label_rodada.setAutoFillBackground(False)
         self.label_rodada.setStyleSheet("background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:0.492, y2:0, stop:0 rgba(0, 39, 255, 255), stop:0.994318 rgba(164, 196, 255, 255));\n"
-"color: rgb(0, 0, 0);")
+        "color: rgb(0, 0, 0);")
         self.label_rodada.setFrameShape(QtWidgets.QFrame.Box)
         self.label_rodada.setFrameShadow(QtWidgets.QFrame.Raised)
         self.label_rodada.setScaledContents(False)
         self.label_rodada.setAlignment(QtCore.Qt.AlignCenter)
         self.label_rodada.setObjectName("label_rodada")
+
+        
         self.frame = QtWidgets.QFrame(self.centralwidget)
-        self.frame.setGeometry(QtCore.QRect(40, 120, 811, 571))
+        self.frame.setGeometry(QtCore.QRect(80 * width_ratio, 160 * height_ratio, 2688 * width_ratio, 1536 * height_ratio))
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.frame.setObjectName("frame")
+
+        pos_x_posicao_1 = 200
+        width_posicao_1 = 72
         self.posicaoAtual_1 = QtWidgets.QLabel(self.frame)
-        self.posicaoAtual_1.setGeometry(QtCore.QRect(30, 40, 41, 41))
+        self.posicaoAtual_1.setGeometry(QtCore.QRect(pos_x_posicao_1 * width_ratio, 64 * height_ratio, width_posicao_1 * width_ratio, 72 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(16)
+        font.setPointSize(48 * font_ratio)
         self.posicaoAtual_1.setFont(font)
         self.posicaoAtual_1.setStyleSheet("background-color: rgb(255, 0, 0);\n"
-"color: rgb(255, 255, 255);")
+                                           "color: rgb(255, 255, 255);")
         self.posicaoAtual_1.setFrameShape(QtWidgets.QFrame.Box)
         self.posicaoAtual_1.setAlignment(QtCore.Qt.AlignCenter)
         self.posicaoAtual_1.setObjectName("posicaoAtual_1")
 
+
         self.label_jogador1 = QtWidgets.QLabel(self.frame)
-        self.label_jogador1.setGeometry(QtCore.QRect(70, 40, 311, 41))
+        self.label_jogador1.setGeometry(QtCore.QRect((pos_x_posicao_1 + width_posicao_1) * width_ratio, 64 * height_ratio, 400 * width_ratio, 72 * height_ratio))
         font2 = QtGui.QFont()
-        font2.setPointSize(12)
+        
+        font2.setPointSize(48 * font_ratio)
         self.label_jogador1.setFont(font2)
         self.label_jogador1.setAutoFillBackground(False)
         self.label_jogador1.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"color: rgb(0, 0, 0);")
+                                           "color: rgb(0, 0, 0);")
         self.label_jogador1.setFrameShape(QtWidgets.QFrame.Box)
         self.label_jogador1.setFrameShadow(QtWidgets.QFrame.Plain)
         self.label_jogador1.setObjectName("label_jogador1")
 
+
         self.label_2 = QtWidgets.QLabel(self.frame)
-        self.label_2.setGeometry(QtCore.QRect(390, 50, 21, 21))
+        self.label_2.setGeometry(QtCore.QRect(1024 * width_ratio, 64 * height_ratio, 72 * width_ratio, 72 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(30 * font_ratio)
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
 
+
         self.label_jogador2 = QtWidgets.QLabel(self.frame)
-        self.label_jogador2.setGeometry(QtCore.QRect(420, 40, 311, 41))
+        self.label_jogador2.setGeometry(QtCore.QRect(900 * width_ratio, 64 * height_ratio, 400 * width_ratio, 72 * height_ratio))
         self.label_jogador2.setFont(font2)
         self.label_jogador2.setAutoFillBackground(False)
         self.label_jogador2.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"color: rgb(0, 0, 0);")
+                                           "color: rgb(0, 0, 0);")
         self.label_jogador2.setFrameShape(QtWidgets.QFrame.Box)
         self.label_jogador2.setFrameShadow(QtWidgets.QFrame.Plain)
-        self.label_jogador2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_jogador2.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.label_jogador2.setObjectName("label_jogador2")
 
+
         self.posicaoAtual_2 = QtWidgets.QLabel(self.frame)
-        self.posicaoAtual_2.setGeometry(QtCore.QRect(730, 40, 41, 41))
+        self.posicaoAtual_2.setGeometry(QtCore.QRect(1300 * width_ratio, 64 * height_ratio, 72 * width_ratio, 72 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(16)
+        font.setPointSize(48 * font_ratio)  # Adjust font size
         self.posicaoAtual_2.setFont(font)
         self.posicaoAtual_2.setStyleSheet("background-color: rgb(255, 0, 0);\n"
-"color: rgb(255, 255, 255);")
+                                           "color: rgb(255, 255, 255);")
         self.posicaoAtual_2.setFrameShape(QtWidgets.QFrame.Box)
         self.posicaoAtual_2.setAlignment(QtCore.Qt.AlignCenter)
         self.posicaoAtual_2.setObjectName("posicaoAtual_2")
+
+        posicao_x_label = 810
+        label_positions = [(posicao_x_label, 230), (posicao_x_label, 260), (posicao_x_label, 290), (posicao_x_label, 320), 
+        (posicao_x_label, 350), (posicao_x_label, 380), (posicao_x_label, 410), (posicao_x_label, 440), (posicao_x_label, 470)]
+
+
         self.label_R1 = QtWidgets.QLabel(self.frame)
-        self.label_R1.setGeometry(QtCore.QRect(370, 230, 54, 18))
+        self.label_R1.setGeometry(QtCore.QRect(label_positions[0][0] * width_ratio, label_positions[0][1] * height_ratio, 54 * width_ratio, 18 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(9)
+        font.setPointSize(14 * font_ratio)
         self.label_R1.setFont(font)
-        self.label_R1.setObjectName("label_R1")
+        self.label_R1.setObjectName(f"label_R1")
+        self.label_R1.setText(f"Round 1")
+        self.label_R1.raise_()
+        
         self.label_R2 = QtWidgets.QLabel(self.frame)
-        self.label_R2.setGeometry(QtCore.QRect(370, 260, 54, 18))
+        self.label_R2.setGeometry(QtCore.QRect(label_positions[1][0] * width_ratio, label_positions[1][1] * height_ratio, 54 * width_ratio, 18 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(9)
+        font.setPointSize(14 * font_ratio)
         self.label_R2.setFont(font)
-        self.label_R2.setObjectName("label_R2")
+        self.label_R2.setObjectName(f"label_R2")
+        self.label_R2.setText(f"Round 2")
+        self.label_R2.raise_()
+        
         self.label_R3 = QtWidgets.QLabel(self.frame)
-        self.label_R3.setGeometry(QtCore.QRect(370, 290, 54, 18))
+        self.label_R3.setGeometry(QtCore.QRect(label_positions[2][0] * width_ratio, label_positions[2][1] * height_ratio, 54 * width_ratio, 18 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(9)
+        font.setPointSize(14 * font_ratio)
         self.label_R3.setFont(font)
-        self.label_R3.setObjectName("label_R3")
+        self.label_R3.setObjectName(f"label_R3")
+        self.label_R3.setText(f"Round 3")
+        self.label_R3.raise_()
+        
         self.label_R4 = QtWidgets.QLabel(self.frame)
-        self.label_R4.setGeometry(QtCore.QRect(370, 320, 54, 18))
+        self.label_R4.setGeometry(QtCore.QRect(label_positions[3][0] * width_ratio, label_positions[3][1] * height_ratio, 54 * width_ratio, 18 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(9)
+        font.setPointSize(14 * font_ratio)
         self.label_R4.setFont(font)
-        self.label_R4.setObjectName("label_R4")
+        self.label_R4.setObjectName(f"label_R4")
+        self.label_R4.setText(f"Round 4")
+        self.label_R4.raise_()
+        
         self.label_R5 = QtWidgets.QLabel(self.frame)
-        self.label_R5.setGeometry(QtCore.QRect(370, 350, 54, 18))
+        self.label_R5.setGeometry(QtCore.QRect(label_positions[4][0] * width_ratio, label_positions[4][1] * height_ratio, 54 * width_ratio, 18 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(9)
+        font.setPointSize(14 * font_ratio)
         self.label_R5.setFont(font)
-        self.label_R5.setObjectName("label_R5")
+        self.label_R5.setObjectName(f"label_R5")
+        self.label_R5.setText(f"Round 5")
+        self.label_R5.raise_()
+        
         self.label_R6 = QtWidgets.QLabel(self.frame)
-        self.label_R6.setGeometry(QtCore.QRect(370, 380, 54, 18))
+        self.label_R6.setGeometry(QtCore.QRect(label_positions[5][0] * width_ratio, label_positions[5][1] * height_ratio, 54 * width_ratio, 18 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(9)
+        font.setPointSize(14 * font_ratio)
         self.label_R6.setFont(font)
-        self.label_R6.setObjectName("label_R6")
+        self.label_R6.setObjectName(f"label_R6")
+        self.label_R6.setText(f"Round 6")
+        self.label_R6.raise_()
+        
         self.label_R7 = QtWidgets.QLabel(self.frame)
-        self.label_R7.setGeometry(QtCore.QRect(370, 410, 54, 18))
+        self.label_R7.setGeometry(QtCore.QRect(label_positions[6][0] * width_ratio, label_positions[6][1] * height_ratio, 54 * width_ratio, 18 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(9)
+        font.setPointSize(14 * font_ratio)
         self.label_R7.setFont(font)
-        self.label_R7.setObjectName("label_R7")
+        self.label_R7.setObjectName(f"label_R7")
+        self.label_R7.setText(f"Round 7")
+        self.label_R7.raise_()
+        
         self.label_R8 = QtWidgets.QLabel(self.frame)
-        self.label_R8.setGeometry(QtCore.QRect(370, 440, 54, 18))
+        self.label_R8.setGeometry(QtCore.QRect(label_positions[7][0] * width_ratio, label_positions[7][1] * height_ratio, 54 * width_ratio, 18 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(9)
+        font.setPointSize(14 * font_ratio)
         self.label_R8.setFont(font)
-        self.label_R8.setObjectName("label_R8")
+        self.label_R8.setObjectName(f"label_R8")
+        self.label_R8.setText(f"Round 8")
+        self.label_R8.raise_()
+        
         self.label_R9 = QtWidgets.QLabel(self.frame)
-        self.label_R9.setGeometry(QtCore.QRect(370, 470, 54, 18))
+        self.label_R9.setGeometry(QtCore.QRect(label_positions[8][0] * width_ratio, label_positions[8][1] * height_ratio, 54 * width_ratio, 18 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(9)
+        font.setPointSize(14 * font_ratio)
         self.label_R9.setFont(font)
-        self.label_R9.setObjectName("label_R9")
+        self.label_R9.setObjectName(f"label_R9")
+        self.label_R9.setText(f"Round 9")
+        self.label_R9.raise_()
+        
+
+        posicao_x_combobox_p1 = 300
+        combobox_positions = [(posicao_x_combobox_p1, 230), (posicao_x_combobox_p1, 260), (posicao_x_combobox_p1, 290), (posicao_x_combobox_p1, 320), 
+        (posicao_x_combobox_p1, 350), (posicao_x_combobox_p1, 380), (posicao_x_combobox_p1, 410), (posicao_x_combobox_p1, 440), (posicao_x_combobox_p1, 470)]
+
 
         self.comboBoxR1P1 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR1P1.setGeometry(QtCore.QRect(38, 230, 321, 22))
+        self.comboBoxR1P1.setGeometry(QtCore.QRect(combobox_positions[0][0] * width_ratio, combobox_positions[0][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
         self.comboBoxR1P1.setCurrentText("")
-        self.comboBoxR1P1.setObjectName("comboBoxR1P1")
+        #self.combobox.setObjectName(f"comboBoxR{i}P1")
+        font = QtGui.QFont()
+        font.setPointSize(18 * font_ratio)
         self.comboBoxR1P1.addItems(self.resultados)
-
+        self.comboBoxR1P1.setFont(font)
+        self.comboBoxR1P1.currentIndexChanged.connect(self.teste)
+        self.comboBoxR1P1.raise_()
+        
         self.comboBoxR2P1 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR2P1.setGeometry(QtCore.QRect(38, 260, 321, 22))
+        self.comboBoxR2P1.setGeometry(QtCore.QRect(combobox_positions[1][0] * width_ratio, combobox_positions[1][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
         self.comboBoxR2P1.setCurrentText("")
-        self.comboBoxR2P1.setObjectName("comboBoxR2P1")
         self.comboBoxR2P1.addItems(self.resultados)
-
+        self.comboBoxR2P1.setFont(font)
+        self.comboBoxR2P1.currentIndexChanged.connect(self.teste)
+        self.comboBoxR2P1.raise_()
+        
         self.comboBoxR3P1 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR3P1.setGeometry(QtCore.QRect(38, 290, 321, 22))
+        self.comboBoxR3P1.setGeometry(QtCore.QRect(combobox_positions[2][0] * width_ratio, combobox_positions[2][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
         self.comboBoxR3P1.setCurrentText("")
-        self.comboBoxR3P1.setObjectName("comboBoxR3P1")
         self.comboBoxR3P1.addItems(self.resultados)
-
+        self.comboBoxR3P1.setFont(font)
+        self.comboBoxR3P1.currentIndexChanged.connect(self.teste)
+        self.comboBoxR3P1.raise_()
+        
         self.comboBoxR4P1 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR4P1.setGeometry(QtCore.QRect(38, 320, 321, 22))
+        self.comboBoxR4P1.setGeometry(QtCore.QRect(combobox_positions[3][0] * width_ratio, combobox_positions[3][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
         self.comboBoxR4P1.setCurrentText("")
-        self.comboBoxR4P1.setObjectName("comboBoxR4P1")
         self.comboBoxR4P1.addItems(self.resultados)
-
+        self.comboBoxR4P1.setFont(font)
+        self.comboBoxR4P1.currentIndexChanged.connect(self.teste)
+        self.comboBoxR4P1.raise_()
+        
         self.comboBoxR5P1 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR5P1.setGeometry(QtCore.QRect(38, 350, 321, 22))
+        self.comboBoxR5P1.setGeometry(QtCore.QRect(combobox_positions[4][0] * width_ratio, combobox_positions[4][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
         self.comboBoxR5P1.setCurrentText("")
-        self.comboBoxR5P1.setObjectName("comboBoxR5P1")
         self.comboBoxR5P1.addItems(self.resultados)
-
+        self.comboBoxR5P1.setFont(font)
+        self.comboBoxR5P1.currentIndexChanged.connect(self.teste)
+        self.comboBoxR5P1.raise_()
+        
         self.comboBoxR6P1 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR6P1.setGeometry(QtCore.QRect(38, 380, 321, 22))
+        self.comboBoxR6P1.setGeometry(QtCore.QRect(combobox_positions[5][0] * width_ratio, combobox_positions[5][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
         self.comboBoxR6P1.setCurrentText("")
-        self.comboBoxR6P1.setObjectName("comboBoxR6P1")
         self.comboBoxR6P1.addItems(self.resultados)
-
+        self.comboBoxR6P1.setFont(font)
+        self.comboBoxR6P1.currentIndexChanged.connect(self.teste)
+        self.comboBoxR6P1.raise_()
+        
         self.comboBoxR7P1 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR7P1.setGeometry(QtCore.QRect(38, 410, 321, 22))
+        self.comboBoxR7P1.setGeometry(QtCore.QRect(combobox_positions[6][0] * width_ratio, combobox_positions[6][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
         self.comboBoxR7P1.setCurrentText("")
-        self.comboBoxR7P1.setObjectName("comboBoxR7P1")
         self.comboBoxR7P1.addItems(self.resultados)
-
+        self.comboBoxR7P1.setFont(font)
+        self.comboBoxR7P1.currentIndexChanged.connect(self.teste)
+        self.comboBoxR7P1.raise_()
+        
         self.comboBoxR8P1 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR8P1.setGeometry(QtCore.QRect(38, 440, 321, 22))
+        self.comboBoxR8P1.setGeometry(QtCore.QRect(combobox_positions[7][0] * width_ratio, combobox_positions[7][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
         self.comboBoxR8P1.setCurrentText("")
-        self.comboBoxR8P1.setObjectName("comboBoxR8P1")
         self.comboBoxR8P1.addItems(self.resultados)
-
+        self.comboBoxR8P1.setFont(font)
+        self.comboBoxR8P1.currentIndexChanged.connect(self.teste)
+        self.comboBoxR8P1.raise_()
+        
         self.comboBoxR9P1 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR9P1.setGeometry(QtCore.QRect(40, 470, 321, 22))
+        self.comboBoxR9P1.setGeometry(QtCore.QRect(combobox_positions[8][0] * width_ratio, combobox_positions[8][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
         self.comboBoxR9P1.setCurrentText("")
-        self.comboBoxR9P1.setObjectName("comboBoxR9P1")
         self.comboBoxR9P1.addItems(self.resultados)
+        self.comboBoxR9P1.setFont(font)
+        self.comboBoxR9P1.currentIndexChanged.connect(self.teste)
+        self.comboBoxR9P1.raise_()
+        
+        posicao_x_combobox_p2 = 490
+        positions = [(posicao_x_combobox_p2 * width_ratio, 230), (posicao_x_combobox_p2 * width_ratio, 260), (posicao_x_combobox_p2 * width_ratio, 290), (posicao_x_combobox_p2 * width_ratio, 320), 
+        (posicao_x_combobox_p2 * width_ratio, 350), (posicao_x_combobox_p2 * width_ratio, 380), (posicao_x_combobox_p2 * width_ratio, 410), (posicao_x_combobox_p2 * width_ratio, 440), (posicao_x_combobox_p2 * width_ratio, 470)]
 
-        self.comboBoxR2P2 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR2P2.setGeometry(QtCore.QRect(430, 260, 321, 22))
-        self.comboBoxR2P2.setCurrentText("")
-        self.comboBoxR2P2.setObjectName("comboBoxR2P2")
-        self.comboBoxR2P2.addItems(self.resultados)
-
-        self.comboBoxR3P2 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR3P2.setGeometry(QtCore.QRect(430, 290, 321, 22))
-        self.comboBoxR3P2.setCurrentText("")
-        self.comboBoxR3P2.setObjectName("comboBoxR3P2")
-        self.comboBoxR3P2.addItems(self.resultados)
-
-        self.comboBoxR5P2 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR5P2.setGeometry(QtCore.QRect(430, 350, 321, 22))
-        self.comboBoxR5P2.setCurrentText("")
-        self.comboBoxR5P2.setObjectName("comboBoxR5P2")
-        self.comboBoxR5P2.addItems(self.resultados)
-
-        self.comboBoxR4P2 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR4P2.setGeometry(QtCore.QRect(430, 320, 321, 22))
-        self.comboBoxR4P2.setCurrentText("")
-        self.comboBoxR4P2.setObjectName("comboBoxR4P2")
-        self.comboBoxR4P2.addItems(self.resultados)
-
-        self.comboBoxR9P2 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR9P2.setGeometry(QtCore.QRect(430, 470, 321, 22))
-        self.comboBoxR9P2.setCurrentText("")
-        self.comboBoxR9P2.setObjectName("comboBoxR9P2")
-        self.comboBoxR9P2.addItems(self.resultados)
-
-        self.comboBoxR8P2 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR8P2.setGeometry(QtCore.QRect(430, 440, 321, 22))
-        self.comboBoxR8P2.setCurrentText("")
-        self.comboBoxR8P2.setObjectName("comboBoxR8P2")
-        self.comboBoxR8P2.addItems(self.resultados)
-
-        self.comboBoxR6P2 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR6P2.setGeometry(QtCore.QRect(430, 380, 321, 22))
-        self.comboBoxR6P2.setCurrentText("")
-        self.comboBoxR6P2.setObjectName("comboBoxR6P2")
-        self.comboBoxR6P2.addItems(self.resultados)
-
-        self.comboBoxR7P2 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR7P2.setGeometry(QtCore.QRect(430, 410, 321, 22))
-        self.comboBoxR7P2.setCurrentText("")
-        self.comboBoxR7P2.setObjectName("comboBoxR7P2")
-        self.comboBoxR7P2.addItems(self.resultados)
 
         self.comboBoxR1P2 = QtWidgets.QComboBox(self.frame)
-        self.comboBoxR1P2.setGeometry(QtCore.QRect(430, 230, 321, 22))
+        self.comboBoxR1P2.setGeometry(QtCore.QRect(positions[0][0] * width_ratio, positions[0][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
         self.comboBoxR1P2.setCurrentText("")
-        self.comboBoxR1P2.setObjectName("comboBoxR1P2")
+        #self.comboBox.setObjectName(f"comboBoxR{i}P2")
         self.comboBoxR1P2.addItems(self.resultados)
-
-        self.comboBoxR1P1.currentIndexChanged.connect(self.teste)
-        self.comboBoxR2P1.currentIndexChanged.connect(self.teste)
-        self.comboBoxR3P1.currentIndexChanged.connect(self.teste)
-        self.comboBoxR4P1.currentIndexChanged.connect(self.teste)
-        self.comboBoxR5P1.currentIndexChanged.connect(self.teste)
-        self.comboBoxR6P1.currentIndexChanged.connect(self.teste)
-        self.comboBoxR7P1.currentIndexChanged.connect(self.teste)
-        self.comboBoxR8P1.currentIndexChanged.connect(self.teste)
-        self.comboBoxR9P1.currentIndexChanged.connect(self.teste)
+        font = QtGui.QFont()
+        font.setPointSize(18 * font_ratio)
+        self.comboBoxR1P2.setFont(font)
         self.comboBoxR1P2.currentIndexChanged.connect(self.teste2)
+        self.comboBoxR1P2.raise_()
+        
+        self.comboBoxR2P2 = QtWidgets.QComboBox(self.frame)
+        self.comboBoxR2P2.setGeometry(QtCore.QRect(positions[1][0] * width_ratio, positions[1][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
+        self.comboBoxR2P2.setCurrentText("")
+        #self.comboBox.setObjectName(f"comboBoxR{i}P2")
+        self.comboBoxR2P2.addItems(self.resultados)
+        font = QtGui.QFont()
+        font.setPointSize(18 * font_ratio)
+        self.comboBoxR2P2.setFont(font)
         self.comboBoxR2P2.currentIndexChanged.connect(self.teste2)
+        self.comboBoxR2P2.raise_()
+
+        self.comboBoxR3P2 = QtWidgets.QComboBox(self.frame)
+        self.comboBoxR3P2.setGeometry(QtCore.QRect(positions[2][0] * width_ratio, positions[2][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
+        self.comboBoxR3P2.setCurrentText("")
+        #self.comboBox.setObjectName(f"comboBoxR{i}P2")
+        self.comboBoxR3P2.addItems(self.resultados)
+        font = QtGui.QFont()
+        font.setPointSize(18 * font_ratio)
+        self.comboBoxR3P2.setFont(font)
         self.comboBoxR3P2.currentIndexChanged.connect(self.teste2)
+        self.comboBoxR3P2.raise_()
+
+        self.comboBoxR4P2 = QtWidgets.QComboBox(self.frame)
+        self.comboBoxR4P2.setGeometry(QtCore.QRect(positions[3][0] * width_ratio, positions[3][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
+        self.comboBoxR4P2.setCurrentText("")
+        #self.comboBox.setObjectName(f"comboBoxR{i}P2")
+        self.comboBoxR4P2.addItems(self.resultados)
+        font = QtGui.QFont()
+        font.setPointSize(18 * font_ratio)
+        self.comboBoxR4P2.setFont(font)
         self.comboBoxR4P2.currentIndexChanged.connect(self.teste2)
+        self.comboBoxR4P2.raise_()
+
+        self.comboBoxR5P2 = QtWidgets.QComboBox(self.frame)
+        self.comboBoxR5P2.setGeometry(QtCore.QRect(positions[4][0] * width_ratio, positions[4][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
+        self.comboBoxR5P2.setCurrentText("")
+        #self.comboBox.setObjectName(f"comboBoxR{i}P2")
+        self.comboBoxR5P2.addItems(self.resultados)
+        font = QtGui.QFont()
+        font.setPointSize(18 * font_ratio)
+        self.comboBoxR5P2.setFont(font)
         self.comboBoxR5P2.currentIndexChanged.connect(self.teste2)
+        self.comboBoxR5P2.raise_()
+
+        self.comboBoxR6P2 = QtWidgets.QComboBox(self.frame)
+        self.comboBoxR6P2.setGeometry(QtCore.QRect(positions[5][0] * width_ratio, positions[5][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
+        self.comboBoxR6P2.setCurrentText("")
+        #self.comboBox.setObjectName(f"comboBoxR{i}P2")
+        self.comboBoxR6P2.addItems(self.resultados)
+        font = QtGui.QFont()
+        font.setPointSize(18 * font_ratio)
+        self.comboBoxR6P2.setFont(font)
         self.comboBoxR6P2.currentIndexChanged.connect(self.teste2)
+        self.comboBoxR6P2.raise_()
+
+        self.comboBoxR7P2 = QtWidgets.QComboBox(self.frame)
+        self.comboBoxR7P2.setGeometry(QtCore.QRect(positions[6][0] * width_ratio, positions[6][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
+        self.comboBoxR7P2.setCurrentText("")
+        #self.comboBox.setObjectName(f"comboBoxR{i}P2")
+        self.comboBoxR7P2.addItems(self.resultados)
+        font = QtGui.QFont()
+        font.setPointSize(18 * font_ratio)
+        self.comboBoxR7P2.setFont(font)
         self.comboBoxR7P2.currentIndexChanged.connect(self.teste2)
+        self.comboBoxR7P2.raise_()
+
+        self.comboBoxR8P2 = QtWidgets.QComboBox(self.frame)
+        self.comboBoxR8P2.setGeometry(QtCore.QRect(positions[7][0] * width_ratio, positions[7][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
+        self.comboBoxR8P2.setCurrentText("")
+        #self.comboBox.setObjectName(f"comboBoxR{i}P2")
+        self.comboBoxR8P2.addItems(self.resultados)
+        font = QtGui.QFont()
+        font.setPointSize(18 * font_ratio)
+        self.comboBoxR8P2.setFont(font)
         self.comboBoxR8P2.currentIndexChanged.connect(self.teste2)
+        self.comboBoxR8P2.raise_()
+
+        self.comboBoxR9P2 = QtWidgets.QComboBox(self.frame)
+        self.comboBoxR9P2.setGeometry(QtCore.QRect(positions[8][0] * width_ratio, positions[8][1] * height_ratio, 321 * width_ratio, 22 * height_ratio))
+        self.comboBoxR9P2.setCurrentText("")
+        #self.comboBox.setObjectName(f"comboBoxR{i}P2")
+        self.comboBoxR9P2.addItems(self.resultados)
+        font = QtGui.QFont()
+        font.setPointSize(18 * font_ratio)
+        self.comboBoxR9P2.setFont(font)
         self.comboBoxR9P2.currentIndexChanged.connect(self.teste2)
+        self.comboBoxR9P2.raise_()
+
 
         self.label_3 = QtWidgets.QLabel(self.frame)
-        self.label_3.setGeometry(QtCore.QRect(40, 510, 52, 13))
+        self.label_3.setGeometry(QtCore.QRect((posicao_x_combobox_p1 - 100) * width_ratio, 510 * height_ratio, 52 * width_ratio, 13 * height_ratio))
         self.label_3.setObjectName("label_3")
+        font = QtGui.QFont()
+        font.setPointSize(18 * font_ratio)
+        self.label_3.setFont(font)
+
         self.resultadoP1 = QtWidgets.QLineEdit(self.frame)
-        self.resultadoP1.setGeometry(QtCore.QRect(100, 507, 261, 20))
+        self.resultadoP1.setGeometry(QtCore.QRect(posicao_x_combobox_p1 * width_ratio, 507 * height_ratio, 261 * width_ratio, 20 * height_ratio))
         self.resultadoP1.setReadOnly(True)
+        self.resultadoP1.setFont(font)
         self.resultadoP1.setObjectName("resultadoP1")
+
         self.resultadoP2 = QtWidgets.QLineEdit(self.frame)
-        self.resultadoP2.setGeometry(QtCore.QRect(430, 507, 261, 20))
+        self.resultadoP2.setGeometry(QtCore.QRect(990 * width_ratio, 507 * height_ratio, 261 * width_ratio, 20 * height_ratio))
         self.resultadoP2.setReadOnly(True)
+        self.resultadoP2.setFont(font)
         self.resultadoP2.setObjectName("resultadoP2")
+
         self.label_4 = QtWidgets.QLabel(self.frame)
-        self.label_4.setGeometry(QtCore.QRect(40, 533, 52, 13))
+        self.label_4.setGeometry(QtCore.QRect((posicao_x_combobox_p1 - 100) * width_ratio, 533 * height_ratio, 52 * width_ratio, 13 * height_ratio))
         self.label_4.setObjectName("label_4")
+        self.label_4.setFont(font)
+        
         self.statusP1 = QtWidgets.QLineEdit(self.frame)
-        self.statusP1.setGeometry(QtCore.QRect(100, 530, 261, 20))
+        self.statusP1.setGeometry(QtCore.QRect(posicao_x_combobox_p1 * width_ratio, 530 * height_ratio, 261 * width_ratio, 20 * height_ratio))
         self.statusP1.setReadOnly(True)
+        self.statusP1.setFont(font)
         self.statusP1.setObjectName("statusP1")
+
         self.statusP2 = QtWidgets.QLineEdit(self.frame)
-        self.statusP2.setGeometry(QtCore.QRect(430, 530, 261, 20))
+        self.statusP2.setGeometry(QtCore.QRect(990 * width_ratio, 530 * height_ratio, 261 * width_ratio, 20 * height_ratio))
         self.statusP2.setReadOnly(True)
+        self.statusP2.setFont(font)
         self.statusP2.setObjectName("statusP2")
 
+
         self.pushButton = QtWidgets.QPushButton(self.frame)
-        self.pushButton.setGeometry(QtCore.QRect(700, 505, 101, 51))
+        self.pushButton.setGeometry(QtCore.QRect(1280 * width_ratio, 505 * height_ratio, 101 * width_ratio, 51 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(12 * width_ratio)
         font.setBold(True)
         font.setWeight(75)
         self.pushButton.setFont(font)
@@ -756,46 +885,22 @@ class Ui_RodadaTekken(object):
         self.pushButton.clicked.connect(self.proximaLuta)
         self.pushButton.setEnabled(False)
 
+
         self.label_luta = QtWidgets.QLabel(self.frame)
-        self.label_luta.setGeometry(QtCore.QRect(380, 15, 60, 25))
+        self.label_luta.setGeometry(QtCore.QRect(850 * width_ratio, 15 * height_ratio, 60 * width_ratio, 25 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(10 * width_ratio)
         font.setBold(True)
         font.setWeight(75)
         self.label_luta.setFont(font)
         self.label_luta.setObjectName("label_luta")
+
+        
         self.label_jogador1.raise_()
         self.label_2.raise_()
         self.label_jogador2.raise_()
         self.posicaoAtual_2.raise_()
         self.posicaoAtual_1.raise_()
-        self.label_R1.raise_()
-        self.label_R2.raise_()
-        self.label_R3.raise_()
-        self.label_R4.raise_()
-        self.label_R5.raise_()
-        self.label_R6.raise_()
-        self.label_R7.raise_()
-        self.label_R8.raise_()
-        self.label_R9.raise_()
-        self.comboBoxR1P1.raise_()
-        self.comboBoxR2P1.raise_()
-        self.comboBoxR3P1.raise_()
-        self.comboBoxR4P1.raise_()
-        self.comboBoxR5P1.raise_()
-        self.comboBoxR6P1.raise_()
-        self.comboBoxR7P1.raise_()
-        self.comboBoxR8P1.raise_()
-        self.comboBoxR9P1.raise_()
-        self.comboBoxR2P2.raise_()
-        self.comboBoxR3P2.raise_()
-        self.comboBoxR5P2.raise_()
-        self.comboBoxR4P2.raise_()
-        self.comboBoxR9P2.raise_()
-        self.comboBoxR8P2.raise_()
-        self.comboBoxR6P2.raise_()
-        self.comboBoxR7P2.raise_()
-        self.comboBoxR1P2.raise_()
         self.label_3.raise_()
         self.resultadoP1.raise_()
         self.resultadoP2.raise_()
@@ -806,40 +911,46 @@ class Ui_RodadaTekken(object):
         self.label_luta.raise_()
 
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(870, 120, 341, 81))
+        self.pushButton_2.setGeometry(QtCore.QRect(1500 * width_ratio, 300 * height_ratio, 341 * width_ratio, 81 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(20)
+        font.setPointSize(20 * width_ratio)
         self.pushButton_2.setFont(font)
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_2.clicked.connect(self.quemComeca)
         self.pushButton_2.setEnabled(False)
 
+
+        # Adapted code for self.pushButton_3
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_3.setGeometry(QtCore.QRect(870, 300, 341, 91))
+        self.pushButton_3.setGeometry(QtCore.QRect(1500 * width_ratio, 480 * height_ratio, 341 * width_ratio, 91 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(20)
+        font.setPointSize(20 * width_ratio)
         self.pushButton_3.setFont(font)
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_3.clicked.connect(self.mostrarTabela)
         self.pushButton_3.setEnabled(False)
 
+        # Adapted code for self.pushButton_4
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_4.setGeometry(QtCore.QRect(870, 210, 341, 81))
+        self.pushButton_4.setGeometry(QtCore.QRect(1500 * width_ratio, 390 * height_ratio, 341 * width_ratio, 81 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(20)
+        font.setPointSize(20 * width_ratio)
         self.pushButton_4.setFont(font)
         self.pushButton_4.setObjectName("pushButton_4")
         self.pushButton_4.clicked.connect(self.mostrarResultados)
         self.pushButton_4.setEnabled(False)
 
+
+        # Adapted code for self.pushButton_5
         self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_5.setGeometry(QtCore.QRect(870, 400, 341, 91))
+        self.pushButton_5.setGeometry(QtCore.QRect(1500 * width_ratio, 570 * height_ratio, 341 * width_ratio, 91 * height_ratio))
         font = QtGui.QFont()
-        font.setPointSize(20)
+        font.setPointSize(20 * width_ratio)
         self.pushButton_5.setFont(font)
         self.pushButton_5.setObjectName("pushButton_5")
         self.pushButton_5.clicked.connect(self.alterarResultados)
         self.pushButton_5.setEnabled(False)
+
 
         self.frame.raise_()
         self.label.raise_()
@@ -860,22 +971,13 @@ class Ui_RodadaTekken(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Rodada Tekken"))
-        self.label.setText(_translate("MainWindow", "Selecione o campeonato"))
+        self.label.setText(_translate("MainWindow", ""))
         self.label_rodada.setText(_translate("MainWindow", "RODADA 1"))
         self.posicaoAtual_1.setText(_translate("MainWindow", "01"))
         self.label_jogador1.setText(_translate("MainWindow", "Nome do jogador"))
         self.label_2.setText(_translate("MainWindow", "VS"))
         self.label_jogador2.setText(_translate("MainWindow", "Nome do jogador"))
         self.posicaoAtual_2.setText(_translate("MainWindow", "01"))
-        self.label_R1.setText(_translate("MainWindow", "Round 1"))
-        self.label_R2.setText(_translate("MainWindow", "Round 2"))
-        self.label_R3.setText(_translate("MainWindow", "Round 3"))
-        self.label_R4.setText(_translate("MainWindow", "Round 4"))
-        self.label_R5.setText(_translate("MainWindow", "Round 5"))
-        self.label_R6.setText(_translate("MainWindow", "Round 6"))
-        self.label_R7.setText(_translate("MainWindow", "Round 7"))
-        self.label_R8.setText(_translate("MainWindow", "Round 8"))
-        self.label_R9.setText(_translate("MainWindow", "Round 9"))
         self.label_3.setText(_translate("MainWindow", "Resultado:"))
         self.label_4.setText(_translate("MainWindow", "Status:"))
         self.pushButton.setText(_translate("MainWindow", "Próxima\n"
