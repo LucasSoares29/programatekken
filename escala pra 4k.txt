@@ -1,0 +1,30 @@
+def setupUi(self, MainWindow):
+    MainWindow.setObjectName("MainWindow")
+    MainWindow.resize(3840, 2160)  # Updated resolution
+
+    # Calculate position and size ratios
+    width_ratio = MainWindow.width() / 1280
+    height_ratio = MainWindow.height() / 720
+
+    self.centralwidget = QtWidgets.QWidget(MainWindow)
+    self.centralwidget.setObjectName("centralwidget")
+
+    self.label = QtWidgets.QLabel(self.centralwidget)
+    self.label.setGeometry(QtCore.QRect(16 * width_ratio, 20 * height_ratio, 361 * width_ratio, 31 * height_ratio))
+    font = QtGui.QFont()
+    font.setPointSize(14 * width_ratio)
+    self.label.setFont(font)
+    self.label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+    self.label.setObjectName("label")
+
+    # Update other widgets in a similar manner using width_ratio and height_ratio
+
+    # ...
+
+    MainWindow.setCentralWidget(self.centralwidget)
+    self.statusbar = QtWidgets.QStatusBar(MainWindow)
+    self.statusbar.setObjectName("statusbar")
+    MainWindow.setStatusBar(self.statusbar)
+
+    self.retranslateUi(MainWindow)
+    QtCore.QMetaObject.connectSlotsByName(MainWindow)

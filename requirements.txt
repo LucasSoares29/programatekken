@@ -1,0 +1,4 @@
+openpyxl==3.0.10
+pymediainfo==5.1.0
+PyMySQL==1.0.2
+PyQt5==5.15.7

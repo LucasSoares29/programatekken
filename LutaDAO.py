@@ -8,13 +8,13 @@ import pymysql
 class LutaDAO(object):
     
     
-        host = '192.168.0.101'
+        host = 'localhost'
         port = 3308
 
         # testar recuperarIDLuta()
         def recuperarIDLuta(self, idtorneio, idjogador1, idjogador2):
             try:
-                conexao2 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+                conexao2 = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
                 cursor = conexao2.cursor()
                 sql = "select idluta from luta where idtorneio = %s and (idjogador1 = %s or idjogador1 = %s)  and (idjogador2 = %s or idjogador2 = %s);"
                 cursor.execute(sql, (idtorneio, idjogador1, idjogador2, idjogador1, idjogador2))
@@ -31,7 +31,7 @@ class LutaDAO(object):
         # OK
         def inserirLuta(self, idCampeonato, Luta):
             try:
-                conexao2 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+                conexao2 = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
                 cursor = conexao2.cursor()
                 sql = "insert into luta(idtorneio, idjogador1, idjogador2, rodada, finalizada) values (%s, %s, %s, %s, %s);"
                 cursor.execute(sql, (str(idCampeonato), str(Luta.jogador1), str(Luta.jogador2), str(Luta.rodada), str(Luta.finalizada)))
@@ -51,7 +51,7 @@ class LutaDAO(object):
             :return:
             """
             try:
-                conexao2 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+                conexao2 = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
                 cursor = conexao2.cursor()
                 sql = "update luta set resultadojogador1 = %s, resultadojogador2 = %s, finalizada = %s where idluta = %s;"
                 cursor.execute(sql, (Luta.resultadoJogador1, Luta.resultadoJogador2, Luta.finalizada, idLuta))
@@ -72,7 +72,7 @@ class LutaDAO(object):
                 and finalizada = 0
                 order by idluta;'''
 
-                conexao2 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+                conexao2 = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
                 cursor = conexao2.cursor()
                 cursor.execute(sql, idCampeonato)
                 listaLutas = list(cursor.fetchall())
@@ -98,7 +98,7 @@ class LutaDAO(object):
                 and rodada <= %s
                 order by idluta;'''
 
-                conexao2 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+                conexao2 = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
                 cursor = conexao2.cursor()
                 cursor.execute(sql, (idCampeonato, rodadaInicial, rodadaFinal))
                 listaLutas = list(cursor.fetchall())
@@ -127,7 +127,7 @@ class LutaDAO(object):
                 and (tekken.jogador.nome like %s or B.nome like %s)
                 order by idluta;'''
 
-                conexao2 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+                conexao2 = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
                 cursor = conexao2.cursor()
                 cursor.execute(sql, (idCampeonato, rodadaInicial, rodadaFinal, jogador, jogador))
                 listaLutas = list(cursor.fetchall())
@@ -146,7 +146,7 @@ class LutaDAO(object):
                 sql = '''select max(rodada) from tekken.luta
                 where idtorneio = %s'''
 
-                conexao2 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+                conexao2 = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
                 cursor = conexao2.cursor()
                 cursor.execute(sql, idCampeonato)
                 rodadas = int(cursor.fetchone()[0])

@@ -4,12 +4,12 @@ from CampeonatoDAO import *
 
 class jogadorDAO(object):
 
-        host = '192.168.0.101'
+        host = 'localhost'
         port = 3308
 
         def recuperarID(self, nome):
             try:
-                conexao3 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+                conexao3 = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
                 cursor = conexao3.cursor()
                 sql = "select idjogador from jogador where nome like %s;"
                 cursor.execute(sql, (nome,))
@@ -25,7 +25,7 @@ class jogadorDAO(object):
 
         def cadastrarJogador(self, Jogador):
             try:
-                conexao3 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+                conexao3 = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
                 cursor = conexao3.cursor()
                 sql = "insert into jogador(nome, nacionalidade) values(%s, %s);"
                 cursor.execute(sql, (Jogador.nome, Jogador.nacionalidade,))
@@ -41,7 +41,7 @@ class jogadorDAO(object):
                 conexao3.close()
 
         def recuperarJogador(self, nome):
-            conexao3 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+            conexao3 = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
             cursor = conexao3.cursor()
             sql = "select nome, nacionalidade from jogador where nome like %s;"
             cursor.execute(sql, (nome,))
@@ -52,7 +52,7 @@ class jogadorDAO(object):
             return jogador
 
         def listaDeJogadores(self):
-            conexao3 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+            conexao3 = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
             cursor = conexao3.cursor()
             jogadores = []
             sql = "select nome, nacionalidade from jogador order by 1"
@@ -69,7 +69,7 @@ class jogadorDAO(object):
             j = Jogador(None, None)
 
             try:
-                conexao4 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+                conexao4 = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
                 cursor = conexao4.cursor()
                 sql = "select * from tabela where idtorneio = %s and idjogador = %s;"
                 cursor.execute(sql, (str(idcampeonato), str(idjogador)))
@@ -105,7 +105,7 @@ class jogadorDAO(object):
             """
 
             try:
-                conexao3 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+                conexao3 = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
                 cursor = conexao3.cursor()
                  # sql recuperar pontuacao atual do jogador
 
@@ -149,7 +149,7 @@ class jogadorDAO(object):
             """
 
             try:
-                conexao3 = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+                conexao3 = pymysql.connect(host=self.host, user='root',  db='tekken', port=self.port)
                 cursor = conexao3.cursor()
                  # sql recuperar pontuacao atual do jogador
 

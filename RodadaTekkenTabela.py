@@ -181,14 +181,19 @@ class Ui_FormPontuacao(object):
         index = 0
         for item in header:
             self.tabela.setHorizontalHeaderItem(index, QtWidgets.QTableWidgetItem(item))
-            if index > 0:
-                self.tabela.resizeColumnToContents(index)
+            #if index > 0:
+                #self.tabela.resizeColumnToContents(index)
+            if index < 1:
+                self.tabela.setColumnWidth(index,600)
+            else:
+                self.tabela.setColumnWidth(index,150)
             index += 1
-        self.tabela.setColumnWidth(0,150)
+
         linhaIndex = 0
         for linha in self.tabelaGerada:
             #linha[0] = nome
             self.tabela.setRowCount(linhaIndex + 1)
+            self.tabela.setRowHeight(linhaIndex,100) #seta altura da linha       
             for coluna in range(0, totalColunas):
                 if coluna == colunaSaldoRounds and linha[colunaSaldoRounds] > 0:
                     item = QtWidgets.QTableWidgetItem("+ " + str(linha[coluna]))
@@ -200,41 +205,51 @@ class Ui_FormPontuacao(object):
 
                 # CONFIGURAÇÃO DE COR DE FUNDO DO ITEM
                 self.colorirTabela(item, linhaIndex, self.campeonatoSelecionado)
+                
+                # Crie uma fonte personalizada
+                fonte = QtGui.QFont()
+                fonte.setPointSize(32)  # Defina o tamanho da fonte desejado, por exemplo, 16 pontos
+
+                # Atribua a fonte ao item
+                item.setFont(fonte)
+
                 self.tabela.setItem(linhaIndex, coluna, item)
             linhaIndex += 1
+            
 
 
-    def setupUi(self, Form):
+    def setupUi(self, Form):       
         Form.setObjectName("FormPontuacao")
-        Form.resize(1280, 692)
+        Form.resize(3840, 2160)  # Defina a resolução 4K aqui
 
         self.tabela = QtWidgets.QTableWidget(Form)
-        self.tabela.setGeometry(QtCore.QRect(120, 40, 1020, 531))
+        self.tabela.setGeometry(QtCore.QRect(320, 160, 3300, 1440))  # Proporção 16:9 para 4K
         self.tabela.setObjectName("tabela")
         self.tabela.horizontalHeader().setStretchLastSection(True)
         self.tabela.setSelectionMode(QtWidgets.QAbstractItemView.NoSelection)
 
         self.pushButton = QtWidgets.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(790, 590, 100, 70))
+        self.pushButton.setGeometry(QtCore.QRect(3000, 1700, 267, 188))  # Proporção 16:9 para 4K
         font = QtGui.QFont()
-        font.setPointSize(14)
+        font.setPointSize(28)  # Aumente o tamanho da fonte para 4K
         self.pushButton.setFont(font)
         self.pushButton.setObjectName("pushButton")
         self.pushButton.clicked.connect(self.exportarTabela)
 
         self.label = QtWidgets.QLabel(Form)
-        self.label.setGeometry(QtCore.QRect(60, 590, 291, 31))
+        self.label.setGeometry(QtCore.QRect(240, 1440, 522, 72))  # Proporção 16:9 para 4K
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(20)  # Aumente o tamanho da fonte para 4K
         self.label.setFont(font)
         self.label.setObjectName("label_20")
         self.label.setVisible(False)
 
         self.progressBar = QtWidgets.QProgressBar(Form)
-        self.progressBar.setGeometry(QtCore.QRect(60, 620, 400, 23))
+        self.progressBar.setGeometry(QtCore.QRect(240, 1512, 1280, 36))  # Proporção 16:9 para 4K
         self.progressBar.setProperty("value", 0)
         self.progressBar.setObjectName("progressBar")
         self.progressBar.setVisible(False)
+
 
         '''self.botaoAtualizar = QtWidgets.QPushButton(Form)
         self.botaoAtualizar.setGeometry(QtCore.QRect(630, 590, 101, 71))

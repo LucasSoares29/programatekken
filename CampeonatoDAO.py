@@ -6,12 +6,12 @@ from datetime import datetime
 
 class CampeonatoDAO(object):
 
-    host = '192.168.0.101'
+    host = 'localhost'
     port=3308
 
     def recuperarID(self, nome):
         try:
-            conexao = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+            conexao = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
             cursor = conexao.cursor()
             sql = "select idtorneio from torneio where nome like %s;"
             cursor.execute(sql, (nome,))
@@ -26,7 +26,7 @@ class CampeonatoDAO(object):
 
         nomeDosCampeonatos = []
         try:
-            conexao = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+            conexao = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
             cursor = conexao.cursor()
             sql = "select nome from torneio where status = 'INICIADO'"
             cursor.execute(sql)
@@ -45,7 +45,7 @@ class CampeonatoDAO(object):
             Retorna uma lista de ids de jogadores no campeonato
         """
         try:
-            conexao = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+            conexao = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
             cursor = conexao.cursor()
             ids = []
             idCampeonato = str(self.recuperarID(Campeonato.nome))
@@ -61,7 +61,7 @@ class CampeonatoDAO(object):
 
     def cadastrarCampeonato(self, Campeonato):
         try:
-            conexao = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+            conexao = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
             cursor = conexao.cursor()
             sql = "insert into torneio(nome, inicio, status, qtdrounds, TemRingOut, PrimeiroNaFinal, TeraFase2, QtdJogadoresFase2, UltimoEliminado) values(%s, %s, %s, %s, %s, %s, %s, %s, %s);"
             cursor.execute(sql, (Campeonato.nome, str(Campeonato.inicio), Campeonato.status, str(Campeonato.quantidadeRounds), int(Campeonato.temRingOut), int(Campeonato.primeiroNaFinal), int(Campeonato.teraFase2), str(Campeonato.quantosNaFase2), int(Campeonato.ultimoEliminado)))
@@ -81,7 +81,7 @@ class CampeonatoDAO(object):
 
     def cadastrarNovoJogador(self, Campeonato, Jogador):
         try:
-            conexao = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+            conexao = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
             cursor = conexao.cursor()
             idTorneio = str(self.recuperarID(Campeonato.nome))
             idJogador = str(jogadorDAO().recuperarID(Jogador.nome))
@@ -100,7 +100,7 @@ class CampeonatoDAO(object):
             output = open("outputRodadas.txt", "w")
             output.close()
 
-            conexao = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+            conexao = pymysql.connect(host=self.host, user='root',  db='tekken', port=self.port)
             cursor = conexao.cursor()
             output = open("outputRodadas.txt", "w")
             sql = "select count(*) from luta where idtorneio = %s group by rodada limit 1"
@@ -136,7 +136,7 @@ class CampeonatoDAO(object):
         where idtorneio = %s;'''
 
         try:
-            conexao = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+            conexao = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
             cursor = conexao.cursor()
             cursor.execute(sql, idCampeonato)
             row = cursor.fetchone()
@@ -189,7 +189,7 @@ class CampeonatoDAO(object):
                    where idtorneio = %s and rodadas > 0
                    order by 2 desc, 3, 4 desc, 5 desc, 6, 7 desc, 8 desc, 9 desc, 11 desc, 13 desc, 1'''
 
-            conexao = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+            conexao = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
             cursor = conexao.cursor()
             cursor.execute(sql, idCampeonato)
             tabela = list(cursor.fetchall())
@@ -210,7 +210,7 @@ class CampeonatoDAO(object):
         """
 
         try:
-           conexao = pymysql.connect(host=self.host, user='root', password='root', db='tekken', port=self.port)
+           conexao = pymysql.connect(host=self.host, user='root', db='tekken', port=self.port)
            cursor = conexao.cursor()
            sql = "select count(*) from tekken.tabela where idtorneio = %s;"
            cursor.execute(sql, (idCampeonato,))
